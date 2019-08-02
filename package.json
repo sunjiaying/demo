@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "author": "sunjiaying <sunjoin@qq.com>",
   "description": "An electron-vue project",
-  // "license": null,
+  "license": null,
   "main": "./dist/electron/main.js",
   "scripts": {
     "start": " --mode development",
