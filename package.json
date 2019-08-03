@@ -3,7 +3,6 @@
   "version": "0.0.1",
   "author": "sunjiaying <sunjoin@qq.com>",
   "description": "An electron-vue project",
-  "license": null,
   "main": "./dist/electron/main.js",
   "scripts": {
     "start": " --mode development",
@@ -22,7 +21,7 @@
   },
   "build": {
     "productName": "demo",
-    "appId": "com.marisfrolg.demo",
+    "appId": "com.test.demo",
     "directories": {
       "output": "build"
     },
@@ -78,10 +77,11 @@
     "css-loader": "^0.28.11",
     "del": "^3.0.0",
     "devtron": "^1.4.0",
-    "electron": "^2.0.4",
+    "electron": "^4.0.7",
+    "electron-builder": "^20.44.4",
     "electron-debug": "^1.5.0",
     "electron-devtools-installer": "^2.2.4",
-    "electron-builder": "^20.19.2",
+    "electron-updater": "^4.0.6",
     "babel-eslint": "^8.2.3",
     "eslint": "^4.19.1",
     "eslint-friendly-formatter": "^4.0.1",
