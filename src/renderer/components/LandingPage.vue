@@ -4,7 +4,7 @@
     <main>
       <div class="left-side">
         <span class="title">
-          Welcome to your new project!
+          Welcome to your new project! {{ version }}
         </span>
         <system-information></system-information>
       </div>
@@ -23,6 +23,8 @@
           <div class="title alt">Other Documentation</div>
           <button class="alt" @click="open('https://electron.atom.io/docs/')">Electron</button>
           <button class="alt" @click="open('https://vuejs.org/v2/guide/')">Vue.js</button>
+          <button class="alt" @click="autoUpdate()">autoUpdate</button>
+          {{ msg }}
         </div>
       </div>
     </main>
@@ -30,14 +32,40 @@
 </template>
 
 <script>
-  import SystemInformation from './LandingPage/SystemInformation'
+  import SystemInformation from './LandingPage/SystemInformation';
+  const { ipcRenderer } = require('electron');
 
   export default {
     name: 'landing-page',
     components: { SystemInformation },
+    data () {
+      return {
+        version: require('../../../package.json').version,
+        msg: ''
+      }
+    },
+    mounted () {
+      ipcRenderer.removeAllListeners(['message']);
+      ipcRenderer.on('message', (event, {message, data}) => {
+        if (message === 'downloadProgress') {
+          this.msg = data.percent;
+        } else if (message === 'isUpdateNow') {
+          if (confirm('是否现在更新？')) {
+            ipcRenderer.send('updateNow');
+          }
+        } else if (message === 'update-not-available') {
+          alert('当前为最新版本，无需更新');
+        } else if (message === 'error') {
+          alert('检查更新失败');
+        }
+      })
+    },
     methods: {
+      autoUpdate () {
+        ipcRenderer.send('update');
+      },
       open (link) {
-        this.$electron.shell.openExternal(link)
+        this.$electron.shell.openExternal(link);
       }
     }
   }
